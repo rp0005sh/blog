@@ -1,0 +1,66 @@
+<!-- 表示コンポーネントの設定 -->
+<div style="position:relative; width:80%;"> <!-- グラフのサイズ調整（横幅を画面の8割とする -->
+<canvas id="myLineChart"></canvas>          <!-- グラフの実態を入れるコンポーネント -->
+</div>
+
+<!-- グラフの中身実装 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+<script type="text/javascript">
+var ctx = document.getElementById("myLineChart");
+var myLineChart = new Chart(ctx, {
+
+  // グラフの種類を設定
+  type: 'line', // 折れ線グラフ
+
+  // データ設定
+  data: {
+    labels: [...Array(15).keys()].map(i => ++i), // x軸のラベル.1～15にしておく
+    datasets: [
+      {
+        label: '関数のラベル名',
+        data: [...Array(15).keys()].map(i => Math.pow(1 - 1/(++i), i)), // 関数実装内包表記
+        borderColor: "rgba(255,0,0,1)",     // 関数の線に色を付ける
+        backgroundColor: "rgba(0,0,0,0)",   // 関数とx軸の間(積分の面積部分)を塗る(デフォルトで塗るので、透明にして回避)
+        lineTension: 0                      // 点と点を直線で結ぶ設定(デフォルトは曲線で結ぶ)
+      },
+      // 複数のグラフを表示するなら、上の{}ブロックを続けて書く
+    ],
+  },
+  
+  // 表示するX軸、Y軸の設定
+  options: {
+    scales: {
+      // x軸設定
+      xAxes: [{
+        // ラベル設定
+        scaleLabel: {
+          display: true,                            // 表示設定
+          labelString: '説明変数n',                 // 表示ラベル
+          fontSize: 20                              // フォントサイズ
+        },
+      }],
+
+      // y軸設定
+      yAxes: [{
+        // y軸の刻み表示設定
+        ticks: {
+          suggestedMin: 0,    // 0.0から
+          suggestedMax: 0.40, // 0.4まで
+          stepSize: 0.1,      // 刻み幅
+          // 各刻み事に表示する文字（％表記するので、100倍する処理、「%」を付与）
+          callback: function(value, index, values){
+            return  value * 100 +  '%'
+          }
+        },
+        // ラベル設定
+        scaleLabel: {
+          display: true,           // 表示設定
+          labelString: '確率',     // 表示ラベル
+          fontSize: 20             // フォントサイズ
+        }
+      }]
+    },
+  }
+});
+</script>
