@@ -3,22 +3,26 @@ package com.sample.test.myapplication
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.TextView;
+import android.content.SharedPreferences;
 
-class MainActivity : AppCompatActivity() {
-    private val sharedPreferences by lazy{ getSharedPreferences("SaveState", MODE_PRIVATE) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main3)
+class MainActivity extends AppCompatActivity {
+    private SharedPreferences sharedPreferences;
+    private TextView textView;
+    @Override
+    public void  onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences("SaveState", MODE_PRIVATE);
+        textView = findViewById(R.id.textView);
         // 保存データ読み込みを行ってViewに設定
-        textView.visibility = sharedPreferences.getInt("visibility", View.VISIBLE)
+        textView.setVisibility(sharedPreferences.getInt("visibility", View.VISIBLE));
     }
 
-    fun clickButton(view: View) {
-        val value = if (textView.visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
-        textView4.visibility = value
+    public void clickButton(View view) { 
+        int value = (textView.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
+        textView.setVisibility(value);
         // 状態を保存する
-        sharedPreferences.edit().putInt("visibility", value).apply()
+        sharedPreferences.edit().putInt("visibility", value).apply();
     }
 }
