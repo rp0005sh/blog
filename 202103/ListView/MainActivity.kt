@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /** ボタンが押された */
-    fun onClick1(v: View) {
+    fun onClick(v: View) {
         //押下時のタイムスタンプを追加していく
         adapter.add(LocalTime.now().toString())
     }
