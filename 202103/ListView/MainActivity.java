@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         ((ListView)findViewById(R.id.listView)).setAdapter(mAdapter);
     }
 
+    /** ボタンが押された */
     public void onClick(View v) {
+        //押下時のタイムスタンプを追加していく
         mAdapter.add(LocalTime.now().toString());
     }
 
